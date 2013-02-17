@@ -7,8 +7,8 @@ Simple utility to measure the mean execution time of an app and generate graphs 
 Dependencies
 ------------
   * **Python 2**
-  * **Matplotlib**
   * **GNU time**
+  * **Matplotlib** *(Only if you want to get graphic results)*
 
 
 Installation
