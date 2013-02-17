@@ -8,6 +8,7 @@ Dependencies
 ------------
   * **Python 2**
   * **Matplotlib**
+  * **GNU time**
 
 
 Installation
