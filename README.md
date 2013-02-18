@@ -19,14 +19,15 @@ Also you can rename it as meant or create an alias in your `.bashrc`. *E.g. `ali
 Usage
 -----
 
-    meant [-n repeats] [-g|-gst] [-gname filename] 'app to measure'
+    meant [-h|--help] [-n repeats] [-g|-gst] [-gname filename] 'app to measure'
 
 
 ### Options
-  * `-n` - number of repeats of the test *(if this parameter is not specified will be executed 20 test)*
-  * `-g` - generate a graph with the results of each test
-  * `-gst` - generate a graph with the results of each test including the standard deviation
-  * `-gname` - name for the graph file *(if this parameter is not specified will be created with an automatic name)*
+  * `-h, --help` - Show help
+  * `-n` - Number of repeats of the test *(if this parameter is not specified will be executed 20 test)*
+  * `-g` - Generate a graph with the results of each test
+  * `-gst` - Generate a graph with the results of each test including the standard deviation
+  * `-gname` - Name for the graph file *(if this parameter is not specified will be created with an automatic name)*
 
 ### Examples
 

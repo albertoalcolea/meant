@@ -15,9 +15,9 @@ def showHelp(name):
     print
     print 'Options:'
     print '  -h, --help\tShow help'
-    print '  -n\tNumber of repeats of the test'
-    print '  -g\tGenerate a graph with the results of each test'
-    print '  -gst\tGenerate a graph with the results of each test including the standard deviation'
+    print '  -n\t\tNumber of repeats of the test'
+    print '  -g\t\tGenerate a graph with the results of each test'
+    print '  -gst\t\tGenerate a graph with the results of each test including the standard deviation'
     print '  -gname\tName for the graph file'
     print
     print 'If the parameter -n is not specified will be executed 20 test'
