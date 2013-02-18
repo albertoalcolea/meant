@@ -10,6 +10,10 @@ import time
 
 
 
+def showHelp():
+
+
+
 def checkAppExists(cmd):
     status = False
     l = re.findall(r'(\S+)(\s+.+)?', cmd)

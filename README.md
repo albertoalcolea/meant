@@ -7,14 +7,13 @@ Simple utility to measure the mean execution time of an app and generate graphs 
 Dependencies
 ------------
   * **Python 2**
-  * **GNU time**
   * **Matplotlib** *(Only if you want to get graphic results)*
 
 
 Installation
 ------------
 Place meant.py in `/usr/local/bin`, preferred, or in `/usr/bin` (or any other existing directory in your $PATH environment variable)
-Also you can rename it as meant or create an alias in your `.bashrc`
+Also you can rename it as meant or create an alias in your `.bashrc`. *eg. `alias meant='python2 ~/scripts/meant.py'`*
 
 
 Usage
@@ -25,7 +24,6 @@ Usage
 
 ### Options
   * `-n` - number of repeats of the test *(if this parameter is not specified will be executed 20 test)*
-  * `-u` - you can specify a regex for extracting the execution time to measure ***(experimental functionality)***
   * `-g` - generate a graph with the results of each test
   * `-gst` - generate a graph with the results of each test including the standard deviation
   * `-gname` - name for the graph file *(if this parameter is not specified will be created with an automatic name)*
