@@ -10,7 +10,7 @@ import time
 
 
 
-def checkExeExists(cmd):
+def checkAppExists(cmd):
     status = False
     l = re.findall(r'(\S+)(\s+.+)?', cmd)
 
@@ -25,51 +25,18 @@ def checkExeExists(cmd):
     return (wout[0] == 0 or exists)
 
 
-def withTime(out):
-    l = re.findall(r'([\d+]?)(\d+):(\d+.\d+) real', out)
-    t = (float(l[0][1]) * 60) + float(l[0][2])
-    if l[0][0] != "":
-        t = (float(l[0][0]) * 3600) + t
-    
-    return t
-    
-
-def conUserRegex(out, userRegex):
-    l = re.findall(r'' + userRegex, out)
-    try:
-        t = 0
-        if type(l[0]) == list:            
-            if len(l[0]) == 1:
-                t = float(l[0][0])
-            elif len(l[0]) == 2:
-                t = (float(l[0][0]) * 60) + float(l[0][1])
-            elif len(l[0]) == 3:
-                t = (float(l[0][0]) * 3600) + (float(l[0][1]) * 60) + float(l[0][2])
-            else:
-                raise Exception("Bad regex")
-        else:
-            t = float(l[0])
-            
-        return t
-    except:
-        print >>sys.stderr, "\nThe regex introduced is not valid"
-        exit(1)
-
-
-def extractTime(cmd, unixTime, userRegex):
+def extractTime(cmd):
     while (True):  # If the app returns error, run it again
+        tinit = time.time()
         out = commands.getstatusoutput(cmd)
+        t = time.time() - tinit
         if out[0] == 0:
-            if unixTime:
-                t = withTime(out[1])
-            else:
-                t = conUserRegex(out[1], userRegex)
             break
   
-    return t 
+    return t
 
 
-def calculateMean(cmd, numRepeats, unixTime, userRegex):
+def calculateMean(cmd, numRepeats):
     print "Starting  the calculation of the mean time..."
   
     ltimes = []
@@ -77,7 +44,7 @@ def calculateMean(cmd, numRepeats, unixTime, userRegex):
     for n in range(0, numRepeats):
         sys.stdout.write("  Test [" + str(n+1) + "]")
         sys.stdout.flush()
-        t = extractTime(cmd, unixTime, userRegex)
+        t = extractTime(cmd)
         print ":\t%4.3f s" % (t)
         ltimes.append(t)
         
@@ -131,8 +98,6 @@ def draw(ltimes, mean, sDeviation, graphST, graphName):
 def meant(argv):
     
     cmd = ""
-    unixTime = True
-    userRegex = ""
     graph = False
     graphST = False
     graphName = ""
@@ -151,19 +116,9 @@ def meant(argv):
             except:
                 print >>sys.stderr, "Invalid parameters"
                 exit(1)
-                
-        elif (argv[i] == "-u"): # User Regex
-            try:
-                userRegex = argv[i + 1]
-                unixTime = False
-                i += 1
-            except:
-                print >>sys.stderr, "Invalid parameters"
-                exit(1)
 
         elif (argv[i] == "-g"): # Graph
             graph = True
-
             
         elif (argv[i] == "-gst"): # Graph with standard deviation
             graph = True
@@ -187,12 +142,9 @@ def meant(argv):
     
     # CMD
     try:
-        if not checkExeExists(argv[i]):
+        if not checkAppExists(argv[i]):
             raise Exception("Invalid app to measure")
-        if unixTime:
-            cmd = "time -f \"%E real\" " + argv[i]
-        else:
-            cmd = argv[i]
+        cmd = argv[i]
     except:
         print >>sys.stderr, "The app to measure doesn't exists"
         exit(1)
@@ -202,7 +154,7 @@ def meant(argv):
         graphName = "graph_" + str(int(time.time())) + ".png"
     
     # Launch the app and calculate execution time    
-    ltimes = calculateMean(cmd, repeats, unixTime, userRegex)
+    ltimes = calculateMean(cmd, repeats)
     showResults(ltimes, graph, graphST, graphName)
   
 
