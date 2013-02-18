@@ -25,7 +25,7 @@ def checkExeExists(cmd):
     return (wout[0] == 0 or exists)
 
 
-def conTime(out):
+def withTime(out):
     l = re.findall(r'([\d+]?)(\d+):(\d+.\d+) real', out)
     t = (float(l[0][1]) * 60) + float(l[0][2])
     if l[0][0] != "":
@@ -52,16 +52,16 @@ def conUserRegex(out, userRegex):
             
         return t
     except:
-        print >>sys.stderr, "\nLa expresión regular introducida no es válida"
+        print >>sys.stderr, "\nThe regex introduced is not valid"
         exit(1)
 
 
-def sacarTiempo(cmd, unixTime, userRegex):
-    while (True):  # Si el programa devuelve error vuelve a ejecutarlo
+def extractTime(cmd, unixTime, userRegex):
+    while (True):  # If the app returns error, run it again
         out = commands.getstatusoutput(cmd)
         if out[0] == 0:
             if unixTime:
-                t = conTime(out[1])
+                t = withTime(out[1])
             else:
                 t = conUserRegex(out[1], userRegex)
             break
@@ -69,60 +69,60 @@ def sacarTiempo(cmd, unixTime, userRegex):
     return t 
 
 
-def calculaMedia(cmd, pasadas, unixTime, userRegex):
-    print "Iniciando el calculo del tiempo medio..."
+def calculateMean(cmd, numRepeats, unixTime, userRegex):
+    print "Starting  the calculation of the mean time..."
   
-    ltiempos = []
+    ltimes = []
   
-    for n in range(0, pasadas):
-        sys.stdout.write("  Calculando tiempo [" + str(n+1) + "]")
+    for n in range(0, numRepeats):
+        sys.stdout.write("  Test [" + str(n+1) + "]")
         sys.stdout.flush()
-        t = sacarTiempo(cmd, unixTime, userRegex)
+        t = extractTime(cmd, unixTime, userRegex)
         print ":\t%4.3f s" % (t)
-        ltiempos.append(t)
+        ltimes.append(t)
         
-    return ltiempos
+    return ltimes
 
 
-def muestraResultados(ltiempos, graph=False, graphST=False, graphName="graph.png"):
-    nMuestras = len(ltiempos)
-    media = sum([x for x in ltiempos]) / nMuestras
-    varianza = sum([(x-media)**2 for x in ltiempos]) / len(ltiempos)
-    dTipica = math.sqrt(varianza)
+def showResults(ltimes, graph=False, graphST=False, graphName="graph.png"):
+    nSamples = len(ltimes)
+    mean = sum([x for x in ltimes]) / nSamples
+    variance = sum([(x-mean)**2 for x in ltimes]) / len(ltimes)
+    sDeviation = math.sqrt(variance)
 	
-    print "Tiempo medio para", nMuestras, "ejecuciones:", media, "s"
-    print "Desviación típica para", nMuestras, "ejecuciones:", dTipica, "s"
+    print "Mean time for ", nSamples, "executions:", mean, "s"
+    print "Standard deviation for", nSamples, "executions:", sDeviation, "s"
     if graph:
-        draw(ltiempos, media, dTipica, graphST, graphName)
+        draw(ltimes, mean, sDeviation, graphST, graphName)
 
 
-def draw(ltiempos, media, dTipica, graphST, graphName):
+def draw(ltimes, mean, sDeviation, graphST, graphName):
     import matplotlib.pyplot as plt
  
     plt.figure()
     
-    # En x numero de pasadas
-    x = range(1, len(ltiempos)+1)
+    # x-axis = num of tests
+    x = range(1, len(ltimes)+1)
     
-    # En la recta de la media todas las y = media
-    y_mean = [media for i in range(len(ltiempos))]
+    # In the line of the mean put all y = mean
+    y_mean = [mean for i in range(len(ltimes))]
  
     #plot the two lines
-    plt.plot(x, ltiempos, 'bo')
+    plt.plot(x, ltimes, 'bo')
     plt.plot(x, y_mean, 'r')
     
     if graphST:
-        y_plusST = [media+dTipica for i in range(len(ltiempos))]
-        y_minusST = [media-dTipica for i in range(len(ltiempos))]
+        y_plusST = [mean+sDeviation for i in range(len(ltimes))]
+        y_minusST = [mean-sDeviation for i in range(len(ltimes))]
         plt.plot(x, y_plusST, 'k')
         plt.plot(x, y_minusST, 'k')
         
-        legend = '\mu=' +  str(round(media, 3)) + ',\ \sigma=' + str(round(dTipica, 3))
+        legend = '\mu=' +  str(round(mean, 3)) + ',\ \sigma=' + str(round(sDeviation, 3))
     else:
-        legend = '\mu=' +  str(round(media, 3))
+        legend = '\mu=' +  str(round(mean, 3))
     
-    plt.text(1.5, media+.005, r'$' + legend + '$', bbox={'facecolor':'red', 'alpha':0.8, 'pad':5})
-    plt.axis([1, len(ltiempos), min(ltiempos)-0.05, max(ltiempos)+0.05])
+    plt.text(1.5, mean+.005, r'$' + legend + '$', bbox={'facecolor':'red', 'alpha':0.8, 'pad':5})
+    plt.axis([1, len(ltimes), min(ltimes)-0.05, max(ltimes)+0.05])
     plt.grid(True)
 
     plt.savefig(graphName)
@@ -136,20 +136,20 @@ def meant(argv):
     graph = False
     graphST = False
     graphName = ""
-    pasadas = 20
+    repeats = 20
 	
   
-    # Se leen los argumentos
+    # Read the arguments
     i = 0
     while (i < len(argv)-1): 
-        if (argv[i] == "-n"): # Pasadas
+        if (argv[i] == "-n"): # Repeats
             try:
-                pasadas = int(argv[i + 1])
-                if (pasadas < 1):
+                repeats = int(argv[i + 1])
+                if (repeats < 1):
                     raise Exception("Invalid repeat number")
                 i += 1
             except:
-                print >>sys.stderr, "Parámetros inválidos"
+                print >>sys.stderr, "Invalid parameters"
                 exit(1)
                 
         elif (argv[i] == "-u"): # User Regex
@@ -158,7 +158,7 @@ def meant(argv):
                 unixTime = False
                 i += 1
             except:
-                print >>sys.stderr, "Parámetros inválidos"
+                print >>sys.stderr, "Invalid parameters"
                 exit(1)
 
         elif (argv[i] == "-g"): # Graph
@@ -176,11 +176,11 @@ def meant(argv):
                     raise Exception("Invalid filename for graph")
                 i += 1
             except:
-                print >>sys.stderr, "Parámetros inválidos"
+                print >>sys.stderr, "Invalid parameters"
                 exit(1)
 
         else:
-            print >>sys.stderr, "Parámetro desconocido:", argv[i]
+            print >>sys.stderr, "Unknown parameter:", argv[i]
             exit(1)
             
         i += 1
@@ -194,21 +194,21 @@ def meant(argv):
         else:
             cmd = argv[i]
     except:
-        print >>sys.stderr, "El ejecutable a medir no existe"
+        print >>sys.stderr, "The app to measure doesn't exists"
         exit(1)
         
-    # Nombre por defecto para el fichero con el gráfico    
+    # Default name for the graph file    
     if graph and graphName == "":
         graphName = "graph_" + str(int(time.time())) + ".png"
     
-    # Ejecuta el programa y calcula tiempos de ejecución    
-    ltiempos = calculaMedia(cmd, pasadas, unixTime, userRegex)
-    muestraResultados(ltiempos, graph, graphST, graphName)
+    # Launch the app and calculate execution time    
+    ltimes = calculateMean(cmd, repeats, unixTime, userRegex)
+    showResults(ltimes, graph, graphST, graphName)
   
 
 # MAIN
 if __name__ == '__main__':
-    argc = len(sys.argv)  # Número de agumentos
+    argc = len(sys.argv)  # Num of args
 
     if argc < 2:
         print >>sys.stderr, "USAGE:", sys.argv[0], "[-n repeats] [-u regex] [-g|-gst] [-gname filename] 'app to measure'"
