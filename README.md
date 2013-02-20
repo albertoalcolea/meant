@@ -19,7 +19,7 @@ Also you can rename it as meant or create an alias in your `.bashrc`. *E.g. `ali
 Usage
 -----
 
-    meant [-h|--help] [-n repeats] [-g|-gst] [-gname filename] 'app to measure'
+    meant [-h|--help] [-n repeats] [-g|-gst [-gname filename]] 'app to measure'
 
 
 ### Options

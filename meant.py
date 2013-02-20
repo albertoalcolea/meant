@@ -11,7 +11,7 @@ import time
 
 
 def showHelp(name):
-    print 'USAGE: ', name, "[-h|--help] [-n repeats] [-g|-gst] [-gname filename] 'app to measure'"
+    print 'USAGE: ', name, "[-h|--help] [-n repeats] [-g|-gst [-gname filename]] 'app to measure'"
     print
     print 'Options:'
     print '  -h, --help\tShow help'
@@ -177,7 +177,7 @@ if __name__ == '__main__':
     argc = len(sys.argv)  # Num of args
 
     if argc < 2:
-        print >>sys.stderr, "USAGE:", sys.argv[0], "[-h|--help] [-n repeats] [-g|-gst] [-gname filename] 'app to measure'"
+        showHelp(sys.argv[0])
         exit(1)
     
     if sys.argv[1] == '-h' or sys.argv[1] == '--help':
