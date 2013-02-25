@@ -49,4 +49,4 @@ When all test finish will create a file called 'mygraph.png' with a graph of the
 
 Same as the previous example but in this case the graph will contain the standard deviation
 
-    menat -gst -gname mygraph.png ./tst
+    meant -gst -gname mygraph.png ./tst
