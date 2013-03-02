@@ -11,12 +11,13 @@ import time
 
 
 def showHelp(name):
-    print 'USAGE: ', name, "[-h|--help] [-v] [-n repeats] [-g|-gst [-gname filename]] 'app to measure'"
+    print 'USAGE: ', name, "[-h|--help] [-v] [-n repeats] [-f] [-g|-gst [-gname filename]] 'app to measure'"
     print
     print 'Options:'
     print '  -h, --help\tShow help'
     print '  -v\t\tVerbose mode. Show the execution time for each test'
     print '  -n\t\tNumber of repeats of the test'
+    print '  -f\t\tForces the repetition of the test if the app fails'
     print '  -g\t\tGenerate a graph with the results of each test'
     print '  -gst\t\tGenerate a graph with the results of each test including the standard deviation'
     print '  -gname\tName for the graph file'
@@ -40,18 +41,23 @@ def checkAppExists(cmd):
     return (wout[0] == 0 or exists)
 
 
-def extractTime(cmd):
+def extractTime(cmd, force=False):
     while (True):  # If the app returns error, run it again
         tinit = time.time()
         out = commands.getstatusoutput(cmd)
         t = time.time() - tinit
         if out[0] == 0:
             break
+        else:
+            if not force:
+                print >>sys.stderr, 'The app to measure has failed - [Error: ' + str(out[0]) + ']'
+                print >>sys.stderr, out[1]
+                exit(1)
   
     return t
 
 
-def calculateMean(cmd, numRepeats, verbose=False):
+def calculateMean(cmd, numRepeats, verbose=False, force=False):
     print 'Starting  the calculation of the mean time...'
   
     ltimes = []
@@ -60,7 +66,7 @@ def calculateMean(cmd, numRepeats, verbose=False):
         if verbose:
             sys.stdout.write('  Test [' + str(n+1) + ']')
             sys.stdout.flush()
-        t = extractTime(cmd)
+        t = extractTime(cmd, force)
         if verbose:
             print ':\t%4.3f s' % (t)
         ltimes.append(t)
@@ -115,12 +121,13 @@ def draw(ltimes, mean, sDeviation, graphST, graphName):
 def meant(argv):
     
     cmd = ''
+    repeats = 20
     verbose = False
+    force = False
     graph = False
     graphST = False
     graphName = ''
-    repeats = 20
-	
+
   
     # Read the arguments
     i = 0
@@ -137,6 +144,9 @@ def meant(argv):
 
         elif (argv[i] == '-v'): # Verbose
             verbose = True
+
+        elif (argv[i] == '-f'): # Force
+            force = True
 
         elif (argv[i] == '-g'): # Graph
             graph = True
@@ -175,7 +185,7 @@ def meant(argv):
         graphName = 'graph_' + str(int(time.time())) + '.png'
     
     # Launch the app and calculate execution time    
-    ltimes = calculateMean(cmd, repeats, verbose)
+    ltimes = calculateMean(cmd, repeats, verbose, force)
     showResults(ltimes, graph, graphST, graphName)
   
 
