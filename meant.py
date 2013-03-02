@@ -15,7 +15,7 @@ def showHelp(name):
     print
     print 'Options:'
     print '  -h, --help\tShow help'
-    print '  -v\t\tVerbose. Show the execution time for each test'
+    print '  -v\t\tVerbose mode. Show the execution time for each test'
     print '  -n\t\tNumber of repeats of the test'
     print '  -g\t\tGenerate a graph with the results of each test'
     print '  -gst\t\tGenerate a graph with the results of each test including the standard deviation'
