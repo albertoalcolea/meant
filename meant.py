@@ -11,10 +11,11 @@ import time
 
 
 def showHelp(name):
-    print 'USAGE: ', name, "[-h|--help] [-n repeats] [-g|-gst [-gname filename]] 'app to measure'"
+    print 'USAGE: ', name, "[-h|--help] [-v] [-n repeats] [-g|-gst [-gname filename]] 'app to measure'"
     print
     print 'Options:'
     print '  -h, --help\tShow help'
+    print '  -v\t\tVerbose. Show the execution time for each test'
     print '  -n\t\tNumber of repeats of the test'
     print '  -g\t\tGenerate a graph with the results of each test'
     print '  -gst\t\tGenerate a graph with the results of each test including the standard deviation'
@@ -50,16 +51,18 @@ def extractTime(cmd):
     return t
 
 
-def calculateMean(cmd, numRepeats):
+def calculateMean(cmd, numRepeats, verbose=False):
     print 'Starting  the calculation of the mean time...'
   
     ltimes = []
   
     for n in range(0, numRepeats):
-        sys.stdout.write('  Test [' + str(n+1) + ']')
-        sys.stdout.flush()
+        if verbose:
+            sys.stdout.write('  Test [' + str(n+1) + ']')
+            sys.stdout.flush()
         t = extractTime(cmd)
-        print ':\t%4.3f s' % (t)
+        if verbose:
+            print ':\t%4.3f s' % (t)
         ltimes.append(t)
         
     return ltimes
@@ -112,6 +115,7 @@ def draw(ltimes, mean, sDeviation, graphST, graphName):
 def meant(argv):
     
     cmd = ''
+    verbose = False
     graph = False
     graphST = False
     graphName = ''
@@ -130,6 +134,9 @@ def meant(argv):
             except:
                 print >>sys.stderr, 'Invalid parameters'
                 exit(1)
+
+        elif (argv[i] == '-v'): # Verbose
+            verbose = True
 
         elif (argv[i] == '-g'): # Graph
             graph = True
@@ -168,7 +175,7 @@ def meant(argv):
         graphName = 'graph_' + str(int(time.time())) + '.png'
     
     # Launch the app and calculate execution time    
-    ltimes = calculateMean(cmd, repeats)
+    ltimes = calculateMean(cmd, repeats, verbose)
     showResults(ltimes, graph, graphST, graphName)
   
 
