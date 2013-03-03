@@ -26,7 +26,7 @@ Usage
   * `-h, --help` - Show help
   * `-v` - Verbose mode. Show the execution time for each test
   * `-n` - Number of repeats of the test *(if this parameter is not specified will be executed 20 test)*
-  * `-f` - Forces the repetition of the test if the app fails
+  * `-f` - Force the repetition of the test if the app fails
   * `-g` - Generate a graph with the results of each test
   * `-gst` - Generate a graph with the results of each test including the standard deviation
   * `-gname` - Name for the graph file *(if this parameter is not specified will be created with an automatic name)*

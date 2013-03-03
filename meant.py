@@ -17,7 +17,7 @@ def showHelp(name):
     print '  -h, --help\tShow help'
     print '  -v\t\tVerbose mode. Show the execution time for each test'
     print '  -n\t\tNumber of repeats of the test'
-    print '  -f\t\tForces the repetition of the test if the app fails'
+    print '  -f\t\tForce the repetition of the test if the app fails'
     print '  -g\t\tGenerate a graph with the results of each test'
     print '  -gst\t\tGenerate a graph with the results of each test including the standard deviation'
     print '  -gname\tName for the graph file'
@@ -136,10 +136,10 @@ def meant(argv):
             try:
                 repeats = int(argv[i + 1])
                 if (repeats < 1):
-                    raise Exception('Invalid repeat number')
+                    raise
                 i += 1
             except:
-                print >>sys.stderr, 'Invalid parameters'
+                print >>sys.stderr, 'Invalid repeat number'
                 exit(1)
 
         elif (argv[i] == '-v'): # Verbose
@@ -159,10 +159,10 @@ def meant(argv):
             try:
                 graphName = argv[i + 1]
                 if os.path.isfile(graphName):
-                    raise Exception('Invalid filename for graph')
+                    raise
                 i += 1
             except:
-                print >>sys.stderr, 'Invalid parameters'
+                print >>sys.stderr, 'Invalid filename for graph'
                 exit(1)
 
         else:
