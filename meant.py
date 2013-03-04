@@ -32,19 +32,24 @@ import time
 
 
 def showHelp(name):
-    print 'USAGE: ', name, "[-h|--help] [-v] [-n repeats] [-f] [-g|-gst [-gname filename]] 'app to measure'"
+    print 'USAGE: ', name, "[Options] 'app to measure'"
     print
     print 'Options:'
+    print "  [-h|--help] [-v] [-n repeats] [-f] [-g|-gst [-gname filename]]" 
+    print
     print '  -h, --help\tShow help'
     print '  -v\t\tVerbose mode. Show the execution time for each test'
     print '  -n\t\tNumber of repeats of the test'
     print '  -f\t\tForce the repetition of the test if the app fails'
     print '  -g\t\tGenerate a graph with the results of each test'
-    print '  -gst\t\tGenerate a graph with the results of each test including the standard deviation'
+    print '  -gst\t\tGenerate a graph with the results of each test' 
+    print '   \t\t including the standard deviation'
     print '  -gname\tName for the graph file'
     print
     print 'If the parameter -n is not specified will be executed 20 test'
-    print 'If the parameter -g or -gst is selected but the parameter -gname is not specified the graph file will be created with an automatic name'
+    print
+    print 'If the parameter -g or -gst is selected but the parameter -gname'
+    print 'is not specified the graph file will be created with an automatic name'
 
 
 def checkAppExists(cmd):
