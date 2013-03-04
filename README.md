@@ -23,8 +23,7 @@ Also you can rename it as meant or create an alias in your `.bashrc`. *E.g.
 Usage
 -----
 
-    meant [-h|--help] [-v] [-n repeats] [-f] [-g|-gst [-gname filename]] 
-'app to measure'
+    meant [-h|--help] [-v] [-n repeats] [-f] [-g|-gst [-gname filename]] 'app to measure'
 
 
 ### Options
