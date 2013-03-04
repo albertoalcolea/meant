@@ -16,7 +16,7 @@ Installation
 Place meant.py in `/usr/local/bin`, preferred, or in `/usr/bin` (or any other 
 existing directory in your $PATH environment variable).
 
-Also you can rename it as meant or create an alias in your `.bashrc`. *E.g. 
+Also you can rename it as meant or create an alias in your `.bashrc` *E.g. 
 `alias meant='python2 ~/scripts/meant.py'`*
 
 
