@@ -4,7 +4,7 @@
 # Simple utility to measure the meant execution time of an app and generate 
 # graphs with results.
 #
-# Copyright (c) 2013 Alberto Alcolea (contact@albertoalcolea.com)
+# Copyright (c) 2012-2013 Alberto Alcolea (contact@albertoalcolea.com)
 #
 #
 # Meant is free software: you can redistribute it and/or modify
