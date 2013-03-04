@@ -1,8 +1,8 @@
 #! /usr/bin/env python
 # -*- encoding: utf-8 -*-
 #
-# Simple utility to measure the mean execution time of an app and generate 
-# graphs with results.
+# Simple utility to measure the mean execution time of an app and 
+# generate graphs with results.
 #
 # Copyright (c) 2012-2013 Alberto Alcolea (contact@albertoalcolea.com)
 #
@@ -49,7 +49,8 @@ def showHelp(name):
     print 'If the parameter -n is not specified will be executed 20 test'
     print
     print 'If the parameter -g or -gst is selected but the parameter -gname'
-    print 'is not specified the graph file will be created with an automatic name'
+    print 'is not specified the graph file will be created with an automatic '
+    print 'name'
 
 
 def checkAppExists(cmd):
@@ -76,7 +77,8 @@ def extractTime(cmd, force=False):
             break
         else:
             if not force:
-                print >>sys.stderr, 'The app to measure has failed - [Error: ' + str(out[0]) + ']'
+                print >>sys.stderr, 'The app to measure has failed - [Error: ' 
+                    + str(out[0]) + ']'
                 print >>sys.stderr, out[1]
                 exit(1)
   
@@ -133,11 +135,13 @@ def draw(ltimes, mean, sDeviation, graphST, graphName):
         plt.plot(x, y_plusST, 'k')
         plt.plot(x, y_minusST, 'k')
         
-        legend = '\mu=' +  str(round(mean, 3)) + ',\ \sigma=' + str(round(sDeviation, 3))
+        legend = '\mu=' +  str(round(mean, 3)) + ',\ \sigma=' 
+            + str(round(sDeviation, 3))
     else:
         legend = '\mu=' +  str(round(mean, 3))
     
-    plt.text(1.5, mean+.005, r'$' + legend + '$', bbox={'facecolor':'red', 'alpha':0.8, 'pad':5})
+    plt.text(1.5, mean+.005, r'$' + legend + '$', 
+        bbox={'facecolor':'red', 'alpha':0.8, 'pad':5})
     plt.axis([1, len(ltimes), min(ltimes)-0.05, max(ltimes)+0.05])
     plt.grid(True)
 
