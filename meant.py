@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- encoding: utf-8 -*-
 #
-# Simple utility to measure the meant execution time of an app and generate 
+# Simple utility to measure the mean execution time of an app and generate 
 # graphs with results.
 #
 # Copyright (c) 2012-2013 Alberto Alcolea (contact@albertoalcolea.com)
