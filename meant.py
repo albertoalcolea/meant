@@ -77,7 +77,7 @@ def extractTime(cmd, force=False):
             break
         else:
             if not force:
-                print >>sys.stderr, 'The app to measure has failed - [Error: ' 
+                print >>sys.stderr, 'The app to measure has failed - [Error: ' \
                     + str(out[0]) + ']'
                 print >>sys.stderr, out[1]
                 exit(1)
@@ -135,7 +135,7 @@ def draw(ltimes, mean, sDeviation, graphST, graphName):
         plt.plot(x, y_plusST, 'k')
         plt.plot(x, y_minusST, 'k')
         
-        legend = '\mu=' +  str(round(mean, 3)) + ',\ \sigma=' 
+        legend = '\mu=' +  str(round(mean, 3)) + ',\ \sigma=' \
             + str(round(sDeviation, 3))
     else:
         legend = '\mu=' +  str(round(mean, 3))
