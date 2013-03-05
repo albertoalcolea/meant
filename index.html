@@ -1,33 +1,36 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Meant by albertoalcolea</title>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Meant : Simple utility to measure the mean execution time of an app and generate graphs with results." />
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Meant</title>
   </head>
+
   <body>
-    <div class="wrapper">
-      <header>
-        <h1>Meant</h1>
-        <p>Simple utility to measure the mean execution time of an app and generate graphs with results.</p>
 
-        <p class="view"><a href="https://github.com/albertoalcolea/meant">View the Project on GitHub <small>albertoalcolea/meant</small></a></p>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/albertoalcolea/meant">View on GitHub</a>
 
+          <h1 id="project_title">Meant</h1>
+          <h2 id="project_tagline">Simple utility to measure the mean execution time of an app and generate graphs with results.</h2>
 
-        <ul>
-          <li><a href="https://github.com/albertoalcolea/meant/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/albertoalcolea/meant/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/albertoalcolea/meant">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/albertoalcolea/meant/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/albertoalcolea/meant/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
         <h1>meant</h1>
 
 <p>Simple utility to measure the mean execution time of an app and generate graphs 
@@ -99,16 +102,29 @@ standard deviation</p>
 <pre><code>meant -gst -gname mygraph.png ./tst
 </code></pre>
 
-<h4>Graphic examples</h4>
+<h2>Results</h2>
+
+<pre><code>$ meant examples/tst.sh
+Starting  the calculation of the mean time...
+Mean time for  20 executions: 2.26767920256 s
+Standard deviation for 20 executions: 1.92728648481 s
+</code></pre>
+
+<h3>Graphic examples</h3>
 
 <p><img src="https://github.com/albertoalcolea/meant/blob/master/examples/graph_1352414429.png?raw=true" alt="Graphic 1"><img src="https://github.com/albertoalcolea/meant/blob/master/examples/graph_1352415527.png?raw=true" alt="Graphic 2"><img src="https://github.com/albertoalcolea/meant/blob/master/examples/graph_1352417573.png?raw=true" alt="Graphic 3"></p>
       </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/albertoalcolea">albertoalcolea</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Meant maintained by <a href="https://github.com/albertoalcolea">albertoalcolea</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
-    <script src="javascripts/scale.fix.js"></script>
+
     
+
   </body>
 </html>
