@@ -23,7 +23,7 @@ Also you can rename it as meant or create an alias in your `.bashrc` *E.g.
 Usage
 -----
 
-    meant [-h|--help] [-v] [-n repeats] [-f] [-g|-gst [-gname filename]] 'app to measure'
+    meant [-h|--help] [-v] [-n repeats] [-f] [-g|-gst [-l] [-gname filename]] 'app to measure'
 
 
 ### Options
@@ -35,6 +35,7 @@ will be executed 20 test)*
   * `-g` - Generate a graph with the results of each test
   * `-gst` - Generate a graph with the results of each test including the 
 standard deviation
+  * `-l` - Included a legend with the results in the graph'
   * `-gname` - Name for the graph file *(if this parameter is not specified will
 be created with an automatic name)*
 

@@ -35,7 +35,7 @@ def showHelp(name):
     print 'USAGE: ', name, "[Options] 'app to measure'"
     print
     print 'Options:'
-    print "  [-h|--help] [-v] [-n repeats] [-f] [-g|-gst [-gname filename]]" 
+    print '  [-h|--help] [-v] [-n repeats] [-f] [-g|-gst [-l] [-gname filename]]' 
     print
     print '  -h, --help\tShow help'
     print '  -v\t\tVerbose mode. Show the execution time for each test'
@@ -44,6 +44,7 @@ def showHelp(name):
     print '  -g\t\tGenerate a graph with the results of each test'
     print '  -gst\t\tGenerate a graph with the results of each test' 
     print '   \t\t including the standard deviation'
+    print '  -l\t\tIncluded a legend with the results in the graph'
     print '  -gname\tName for the graph file'
     print
     print 'If the parameter -n is not specified will be executed 20 test'
@@ -102,7 +103,7 @@ def calculateMean(cmd, numRepeats, verbose=False, force=False):
     return ltimes
 
 
-def showResults(ltimes, graph=False, graphST=False, graphName='graph.png'):
+def showResults(ltimes, graph, graphST, graphLegend, graphName='graph.png'):
     nSamples = len(ltimes)
     mean = sum([x for x in ltimes]) / nSamples
     variance = sum([(x-mean)**2 for x in ltimes]) / len(ltimes)
@@ -111,10 +112,10 @@ def showResults(ltimes, graph=False, graphST=False, graphName='graph.png'):
     print 'Mean time for ', nSamples, 'executions:', mean, 's'
     print 'Standard deviation for', nSamples, 'executions:', sDeviation, 's'
     if graph:
-        draw(ltimes, mean, sDeviation, graphST, graphName)
+        draw(ltimes, mean, sDeviation, graphST, graphLegend, graphName)
 
 
-def draw(ltimes, mean, sDeviation, graphST, graphName):
+def draw(ltimes, mean, sDeviation, graphST, graphLegend, graphName):
     import matplotlib.pyplot as plt
  
     plt.figure()
@@ -135,13 +136,17 @@ def draw(ltimes, mean, sDeviation, graphST, graphName):
         plt.plot(x, y_plusST, 'k')
         plt.plot(x, y_minusST, 'k')
         
-        legend = '\mu=' +  str(round(mean, 3)) + ',\ \sigma=' \
-            + str(round(sDeviation, 3))
+        if graphLegend:
+            legend = '\mu=' +  str(round(mean, 3)) + ',\ \sigma=' \
+                + str(round(sDeviation, 3))
     else:
-        legend = '\mu=' +  str(round(mean, 3))
+        if graphLegend:
+            legend = '\mu=' +  str(round(mean, 3))
     
-    plt.text(1.5, mean+.005, r'$' + legend + '$', 
-        bbox={'facecolor':'red', 'alpha':0.8, 'pad':5})
+    if graphLegend:
+        plt.text(1.5, mean+.005, r'$' + legend + '$',
+            bbox={'facecolor':'red', 'alpha':0.8, 'pad':5})
+
     plt.axis([1, len(ltimes), min(ltimes)-0.05, max(ltimes)+0.05])
     plt.grid(True)
 
@@ -155,6 +160,7 @@ def meant(argv):
     verbose = False
     force = False
     graph = False
+    graphLegend = False
     graphST = False
     graphName = ''
 
@@ -180,11 +186,14 @@ def meant(argv):
 
         elif (argv[i] == '-g'): # Graph
             graph = True
-            
+
         elif (argv[i] == '-gst'): # Graph with standard deviation
             graph = True
             graphST = True
-            
+        
+        elif (argv[i] == '-l'): # Graph with legend
+            graphLegend = True
+
         elif (argv[i] == '-gname'):
             try:
                 graphName = argv[i + 1]
@@ -216,7 +225,7 @@ def meant(argv):
     
     # Launch the app and calculate execution time    
     ltimes = calculateMean(cmd, repeats, verbose, force)
-    showResults(ltimes, graph, graphST, graphName)
+    showResults(ltimes, graph, graphST, graphLegend, graphName)
   
 
 # MAIN
