@@ -170,8 +170,6 @@ code {
   -khtml-border-radius: 2px;
   border-radius: 2px;
   box-shadow: 0 0 10px rgba(0,0,0,.1);
-  color: #222;
-  background-color: #fff;
 }
 
 pre {
@@ -198,7 +196,6 @@ pre code {
   margin: 0;
   padding: 0;
   box-shadow: 0;
-  background-color: transparent;
 }
 
 blockquote {
