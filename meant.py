@@ -115,8 +115,8 @@ def showResults(ltimes, extremes, graph, graphST, graphLegend, graphName='graph.
     print 'Standard deviation for', nSamples, 'executions:', sDeviation, 's'
     if extremes:
         print 'Extreme values of results:'
-        print '  Minimum execution time:', min(ltimes)
-        print '  Maximum execution time:', max(ltimes)
+        print '  Minimum execution time:', min(ltimes), 's'
+        print '  Maximum execution time:', max(ltimes), 's'
     if graph:
         draw(ltimes, mean, sDeviation, graphST, graphLegend, graphName)
 
