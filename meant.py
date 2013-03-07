@@ -35,11 +35,13 @@ def showHelp(name):
     print 'USAGE: ', name, "[Options] 'app to measure'"
     print
     print 'Options:'
-    print '  [-h|--help] [-v] [-n repeats] [-f] [-g|-gst [-l] [-gname filename]]' 
+    print '  [-h|--help] [-v] [-n repeats] [-e] [-f] [-g|-gst [-l] [-gname filename]]' 
     print
     print '  -h, --help\tShow help'
     print '  -v\t\tVerbose mode. Show the execution time for each test'
     print '  -n\t\tNumber of repeats of the test'
+    print '  -e\t\tShow the extreme values of the results:'
+    print '  \t\t minimum and maximum execution times'
     print '  -f\t\tForce the repetition of the test if the app fails'
     print '  -g\t\tGenerate a graph with the results of each test'
     print '  -gst\t\tGenerate a graph with the results of each test' 
@@ -103,7 +105,7 @@ def calculateMean(cmd, numRepeats, verbose=False, force=False):
     return ltimes
 
 
-def showResults(ltimes, graph, graphST, graphLegend, graphName='graph.png'):
+def showResults(ltimes, extremes, graph, graphST, graphLegend, graphName='graph.png'):
     nSamples = len(ltimes)
     mean = sum([x for x in ltimes]) / nSamples
     variance = sum([(x-mean)**2 for x in ltimes]) / len(ltimes)
@@ -111,6 +113,10 @@ def showResults(ltimes, graph, graphST, graphLegend, graphName='graph.png'):
 	
     print 'Mean time for ', nSamples, 'executions:', mean, 's'
     print 'Standard deviation for', nSamples, 'executions:', sDeviation, 's'
+    if extremes:
+        print 'Extreme values of results:'
+        print '  Minimum execution time:', min(ltimes)
+        print '  Maximum execution time:', max(ltimes)
     if graph:
         draw(ltimes, mean, sDeviation, graphST, graphLegend, graphName)
 
@@ -158,6 +164,7 @@ def meant(argv):
     cmd = ''
     repeats = 20
     verbose = False
+    extremes = False
     force = False
     graph = False
     graphLegend = False
@@ -180,6 +187,9 @@ def meant(argv):
 
         elif (argv[i] == '-v'): # Verbose
             verbose = True
+
+        elif (argv[i] == '-e'): # Extremes
+            extremes = True
 
         elif (argv[i] == '-f'): # Force
             force = True
@@ -225,7 +235,7 @@ def meant(argv):
     
     # Launch the app and calculate execution time    
     ltimes = calculateMean(cmd, repeats, verbose, force)
-    showResults(ltimes, graph, graphST, graphLegend, graphName)
+    showResults(ltimes, extremes, graph, graphST, graphLegend, graphName)
   
 
 # MAIN
