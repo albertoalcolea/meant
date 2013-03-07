@@ -46,7 +46,7 @@
 
 <h2>Usage</h2>
 
-<pre><code>meant [-h|--help] [-v] [-n repeats] [-f] [-g|-gst [-l] [-gname filename]] 'app to measure'
+<pre><code>meant [-h|--help] [-v] [-n repeats] [-e] [-f] [-g|-gst [-l] [-gname filename]] 'app to measure'
 </code></pre>
 
 <h3>Options</h3>
@@ -59,6 +59,8 @@
 <li>
 <code>-n</code> - Number of repeats of the test <em>(if this parameter is not specified will be executed 20 test)</em>
 </li>
+<li>
+<code>-e</code> - Show the extreme values of the results: minimum and maximum execution times</li>
 <li>
 <code>-f</code> - Force the repetition of the test if the app fails</li>
 <li>
@@ -101,10 +103,13 @@ standard deviation</p>
 
 <h2>Results</h2>
 
-<pre><code>$ meant examples/tst.sh
+<pre><code>$ meant -e examples/tst.sh
 Starting  the calculation of the mean time...
-Mean time for  20 executions: 2.26767920256 s
-Standard deviation for 20 executions: 1.92728648481 s
+Mean time for  20 executions: 3.16320238113 s
+Standard deviation for 20 executions: 1.87772649014 s
+Extreme values of results:
+  Minimum execution time: 0.0135519504547
+  Maximum execution time: 6.01391410828
 </code></pre>
 
 <h3>Graphic results</h3>
