@@ -83,7 +83,7 @@ def extractTime(cmd, force=False):
                 print >>sys.stderr, 'The app to measure has failed - [Error: ' \
                     + str(out[0]) + ']'
                 print >>sys.stderr, out[1]
-                exit(1)
+                sys.exit(1)
   
     return t
 
@@ -183,7 +183,7 @@ def meant(argv):
                 i += 1
             except:
                 print >>sys.stderr, 'Invalid repeat number'
-                exit(1)
+                sys.exit(1)
 
         elif (argv[i] == '-v'): # Verbose
             verbose = True
@@ -212,11 +212,11 @@ def meant(argv):
                 i += 1
             except:
                 print >>sys.stderr, 'Invalid filename for graph'
-                exit(1)
+                sys.exit(1)
 
         else:
             print >>sys.stderr, 'Unknown parameter:', argv[i]
-            exit(1)
+            sys.exit(1)
             
         i += 1
     
@@ -227,7 +227,7 @@ def meant(argv):
         cmd = argv[i]
     except:
         print >>sys.stderr, "The app to measure doesn't exists"
-        exit(1)
+        sys.exit(1)
         
     # Default name for the graph file    
     if graph and graphName == '':
@@ -244,7 +244,7 @@ if __name__ == '__main__':
 
     if argc < 2:
         showHelp(sys.argv[0])
-        exit(1)
+        sys.exit(1)
     
     if sys.argv[1] == '-h' or sys.argv[1] == '--help':
         showHelp(sys.argv[0])
