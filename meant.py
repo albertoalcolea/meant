@@ -35,7 +35,7 @@ def showHelp(name):
     print 'USAGE: ', name, "[Options] 'app to measure'"
     print
     print 'Options:'
-    print '  [-h|--help] [-v] [-n repeats] [-e] [-f] [-g|-gst [-l] [-gname filename]]' 
+    print '  [-h|--help] [-v] [-n repeats] [-e] [-f] [-c filename] [-g|-gst [-l] [-gname filename]]' 
     print
     print '  -h, --help\tShow help'
     print '  -v\t\tVerbose mode. Show the execution time for each test'
@@ -43,6 +43,7 @@ def showHelp(name):
     print '  -e\t\tShow the extreme values of the results:'
     print '  \t\t minimum and maximum execution times'
     print '  -f\t\tForce the repetition of the test if the app fails'
+    print '  -c\t\tExport a csv file with the results'
     print '  -g\t\tGenerate a graph with the results of each test'
     print '  -gst\t\tGenerate a graph with the results of each test' 
     print '   \t\t including the standard deviation'
@@ -69,6 +70,17 @@ def checkAppExists(cmd):
     exists = os.path.isfile(exe)
         
     return (wout[0] == 0 or exists)
+
+
+def checkFileExists(filename):
+    try:
+        if os.path.isfile(filename):
+            raise
+        else:
+            return True
+    except:
+        print >>sys.stderr, 'the file "', filename, '"already exists'
+        return False
 
 
 def extractTime(cmd, force=False):
@@ -159,6 +171,13 @@ def draw(ltimes, mean, sDeviation, graphST, graphLegend, graphName):
     plt.savefig(graphName)
 
 
+def exportResults(ltimes, filename):
+    f = open(filename, 'w')
+    for i in range(len(ltimes)):
+        f.write(str(i+1) + ',' + str(ltimes[i]) + '\n')
+    f.close()
+
+
 def meant(argv):
     
     cmd = ''
@@ -166,6 +185,8 @@ def meant(argv):
     verbose = False
     extremes = False
     force = False
+    csv = False
+    csvName = ''
     graph = False
     graphLegend = False
     graphST = False
@@ -194,6 +215,14 @@ def meant(argv):
         elif (argv[i] == '-f'): # Force
             force = True
 
+        elif (argv[i] == '-c'): # CSV file
+            csv = True
+            csvName = argv[i + 1]
+            if checkFileExists(csvName):
+                i += 1
+            else:
+                sys.exit(1)
+
         elif (argv[i] == '-g'): # Graph
             graph = True
 
@@ -205,14 +234,11 @@ def meant(argv):
             graphLegend = True
 
         elif (argv[i] == '-gname'):
-            try:
-                graphName = argv[i + 1]
-                if os.path.isfile(graphName):
-                    raise
+            graphName = argv[i + 1]
+            if checkFileExists(graphName):
                 i += 1
-            except:
-                print >>sys.stderr, 'Invalid filename for graph'
-                sys.exit(1)
+            else:
+                sys.exit(1)                
 
         else:
             print >>sys.stderr, 'Unknown parameter:', argv[i]
@@ -235,7 +261,10 @@ def meant(argv):
     
     # Launch the app and calculate execution time    
     ltimes = calculateMean(cmd, repeats, verbose, force)
+    # Show and manage the results
     showResults(ltimes, extremes, graph, graphST, graphLegend, graphName)
+    if csv:
+        exportResults(ltimes, csvName)
   
 
 # MAIN

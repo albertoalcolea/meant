@@ -23,7 +23,7 @@ Also you can rename it as meant or create an alias in your `.bashrc` *E.g.
 Usage
 -----
 
-    meant [-h|--help] [-v] [-n repeats] [-e] [-f] [-g|-gst [-l] [-gname filename]] 'app to measure'
+    meant [-h|--help] [-v] [-n repeats] [-e] [-f] [-c filename] [-g|-gst [-l] [-gname filename]] 'app to measure'
 
 
 ### Options
@@ -33,6 +33,7 @@ Usage
 will be executed 20 test)*
   * `-e` - Show the extreme values of the results: minimum and maximum execution times
   * `-f` - Force the repetition of the test if the app fails
+  * `-c` - Export a CSV file with the results
   * `-g` - Generate a graph with the results of each test
   * `-gst` - Generate a graph with the results of each test including the 
 standard deviation
