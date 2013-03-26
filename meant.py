@@ -133,9 +133,7 @@ def showResults(ltimes, extremes, graph, graphST, graphLegend, graphName='graph.
         draw(ltimes, mean, sDeviation, graphST, graphLegend, graphName)
 
 
-def draw(ltimes, mean, sDeviation, graphST, graphLegend, graphName):
-    import matplotlib.pyplot as plt
- 
+def draw(ltimes, mean, sDeviation, graphST, graphLegend, graphName): 
     plt.figure()
     
     # x-axis = num of tests
@@ -255,9 +253,17 @@ def meant(argv):
         print >>sys.stderr, "The app to measure doesn't exists"
         sys.exit(1)
         
-    # Default name for the graph file    
-    if graph and graphName == '':
-        graphName = 'graph_' + str(int(time.time())) + '.png'
+    if graph:
+        # Check and import matplotlib
+        try:
+            import matplotlib.pyplot as plt
+        except:
+            print >>sys.stderr, "You need install matplolib library for get graphic results"
+            sys.exit(1)
+
+        # Default name for the graph file    
+        if graphName == '':
+            graphName = 'graph_' + str(int(time.time())) + '.png'
     
     # Launch the app and calculate execution time    
     ltimes = calculateMean(cmd, repeats, verbose, force)
